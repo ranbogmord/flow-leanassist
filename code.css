@@ -1,0 +1,24 @@
+#ranbogmord-leanassist {
+    position: absolute;
+    pointer-events: all;
+    border-radius: 0.4em;
+    display: none;
+
+    background-color: rgba(0,0,0,0.6);
+	border-radius: 0.4em;
+	padding: 0.2em 0.4em;
+}
+
+#ranbogmord-leanassist.visible  {
+    display: block;
+}
+
+#ranbogmord-leanassist-container #engines {
+    display: flex;
+}
+
+#ranbogmord-leanassist-container #engines .engine {
+    display: flex;
+    flex-direction: column;
+    padding: 2px 4px;
+}
