@@ -109,7 +109,8 @@ const update = () => {
             item.currentMix = 'Rich';
         }
         item.diff = temp - item.max;
-        setEngineVar(`${item.idx}`, "temp", displayTemp(temp));
+        item.temp = temp;
+        setEngineVar(`${item.idx}`, "temp", displayTemp(item.temp));
         setEngineVar(`${item.idx}`, 'diff', displayTemp(item.diff));
         setEngineVar(`${item.idx}`, 'richlean', item.currentMix);
     });
@@ -134,7 +135,7 @@ const update = () => {
             idx: "1",
             max: 0
         }).idx;
-        engines.max = Object.assign(Object.assign({}, engines.max), { diff: engines[maxIdx].diff, max: engines[maxIdx].max, maxMix: engines[maxIdx].maxMix, currentMix: engines[maxIdx].currentMix });
+        engines.max = Object.assign(Object.assign({}, engines.max), { temp: engines[maxIdx].temp, diff: engines[maxIdx].diff, max: engines[maxIdx].max, maxMix: engines[maxIdx].maxMix, currentMix: engines[maxIdx].currentMix });
         setEngineVar('max', 'title', `MAX (${maxIdx})`);
         setEngineVar("max", "temp", displayTemp(engines.max.temp));
         setEngineVar('max', 'diff', displayTemp(engines.max.diff));
