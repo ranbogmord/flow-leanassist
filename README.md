@@ -10,3 +10,5 @@ Multi-engine shows for each engine with a "Max" column for the peak.
 ![Lean Assist 2](img/lean-assist-2.png)
 
 ![Lean Assist 3](img/lean-assist-3.png)
+
+![Lean Assist 4](img/lean-assist-4.png)
