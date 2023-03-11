@@ -22,3 +22,7 @@
     flex-direction: column;
     padding: 2px 4px;
 }
+
+#ranbogmord-leanassist-container #engines .engine.hidden {
+    display: none;
+}

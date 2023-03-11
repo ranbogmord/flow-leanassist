@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "removeComments": true,
+    "module": "amd",
+    "outFile": "./widget/code.js",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./node_modules/types-p42-flow",
+    "**/*.ts"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ranbogmord-leanassist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --removeComments code.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranbogmord/flow-leanassist.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ranbogmord/flow-leanassist/issues"
+  },
+  "homepage": "https://github.com/ranbogmord/flow-leanassist#readme",
+  "devDependencies": {
+    "types-p42-flow": "^1.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@types/node": "^18.15.0"
+  }
+}
