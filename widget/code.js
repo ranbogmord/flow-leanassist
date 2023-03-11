@@ -6,12 +6,18 @@ let numberOfEngines = 0;
 let engines = {};
 this.store = {
     active: false,
-    use_celsius: false,
+    use_metric: false,
 };
 this.$api.datastore.import(this.store);
-const fToC = (f) => (f - 32) * (5 / 9);
+const farenheitToCelcius = (f) => (f - 32) * (5 / 9);
+const maybeConvertTemperature = (f) => {
+    if (this.store.use_metric) {
+        return farenheitToCelcius(f);
+    }
+    return f;
+};
 const displayTemp = (t) => {
-    return `${Math.round(t * 10) / 10}F`;
+    return `${Math.round(t * 10) / 10}${this.store.use_metric ? 'C' : 'F'}`;
 };
 const initEngines = () => {
     engines = {
@@ -86,7 +92,7 @@ const update = () => {
         const item = engines[key];
         item.element = maybeCreateEngineElement(item);
         let temp = this.$api.variables.get(`A:GENERAL ENG EXHAUST GAS TEMPERATURE:${item.idx}`, 'rankine');
-        temp -= 460;
+        temp = maybeConvertTemperature(temp - 460);
         let mixture = this.$api.variables.get(`A:GENERAL ENG MIXTURE LEVER POSITION:${item.idx}`, 'percent');
         if (item.max === null || item.maxMix === null) {
             item.max = temp;
@@ -166,6 +172,17 @@ style(() => {
         }
     }
     return this.store.active ? 'active' : null;
+});
+settings_define({
+    use_metric: {
+        type: 'checkbox',
+        label: 'Use metric',
+        value: this.store.use_metric,
+        changed: (value) => {
+            this.store.use_metric = value;
+            this.$api.datastore.export(this.store);
+        }
+    }
 });
 loop_15hz(() => {
     update();

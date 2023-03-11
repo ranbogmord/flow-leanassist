@@ -18,20 +18,27 @@ let engines: Record<string, Engine> = {};
 declare module global {
     interface Store {
         active: boolean,
-        use_celsius: boolean
+        use_metric: boolean
     }
 }
 
 this.store = {
     active: false,
-    use_celsius: false,
+    use_metric: false,
 };
 
 this.$api.datastore.import(this.store);
 
-const fToC = (f: number) => (f - 32) * (5 / 9);
+const farenheitToCelcius = (f: number) => (f - 32) * (5 / 9);
+const maybeConvertTemperature = (f: number) => {
+    if (this.store.use_metric) {
+        return farenheitToCelcius(f);
+    }
+
+    return f;
+};
 const displayTemp = (t: number) => {
-    return `${Math.round(t * 10) / 10}F`;
+    return `${Math.round(t * 10) / 10}${this.store.use_metric ? 'C' : 'F'}`;
 };
 
 const initEngines = () => {
@@ -124,7 +131,7 @@ const update = () => {
         item.element = maybeCreateEngineElement(item);
 
         let temp = this.$api.variables.get<number>(`A:GENERAL ENG EXHAUST GAS TEMPERATURE:${item.idx}`, 'rankine')
-        temp -= 460;
+        temp = maybeConvertTemperature(temp - 460);
         let mixture = this.$api.variables.get<number>(`A:GENERAL ENG MIXTURE LEVER POSITION:${item.idx}`, 'percent');
 
         if (item.max === null || item.maxMix === null) {
@@ -226,17 +233,17 @@ style(() => {
     return this.store.active ? 'active' : null;
 });
 
-// settings_define({
-// 	use_celsius: {
-// 		type: 'checkbox',
-// 		label: 'Use metric',
-// 		value: this.store.use_celsius,
-// 		changed: (value) => {
-// 			this.store.use_celsius = value;
-// 			this.$api.datastore.export(this.store);
-// 		}
-// 	}
-// })
+settings_define({
+	use_metric: {
+		type: 'checkbox',
+		label: 'Use metric',
+		value: this.store.use_metric as boolean,
+		changed: (value) => {
+			this.store.use_metric = value;
+			this.$api.datastore.export(this.store);
+		}
+	}
+});
 
 loop_15hz(() => {
     update();
